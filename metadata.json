@@ -1,0 +1,8 @@
+{
+  "name": "Copy of الدعم الفني لنظام التعليم الإلكتروني",
+  "description": "A technical support chatbot for the Omani E-Learning system with a secure admin panel for knowledge base management via Word, Excel, and CSV files.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
