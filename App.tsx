@@ -5,6 +5,7 @@ import Layout from './components/Layout';
 import ChatInterface from './components/ChatInterface';
 import AdminPanel from './components/AdminPanel';
 import Login from './components/Login';
+import { DEFAULT_KNOWLEDGE_BASE } from './constants';
 
 const App: React.FC = () => {
   const [view, setView] = useState<AppView>('chat');
@@ -18,12 +19,22 @@ const App: React.FC = () => {
   // تحميل البيانات من التخزين المحلي عند بدء التطبيق
   useEffect(() => {
     const savedFiles = localStorage.getItem('oman_support_files');
-    if (savedFiles) {
+    if (savedFiles && JSON.parse(savedFiles).length > 0) {
       try {
         setKnowledgeFiles(JSON.parse(savedFiles));
       } catch (e) {
         console.error("Error loading files", e);
       }
+    } else {
+      // إذا لم توجد ملفات، قم بتحميل الملف الافتراضي (الأسئلة الشائعة)
+      const defaultFile: KnowledgeFile = {
+        id: 'default-faq',
+        name: 'الأسئلة_الشائعة.csv',
+        type: 'csv',
+        content: DEFAULT_KNOWLEDGE_BASE,
+        uploadDate: Date.now()
+      };
+      setKnowledgeFiles([defaultFile]);
     }
 
     const savedSettings = localStorage.getItem('oman_bot_settings');
